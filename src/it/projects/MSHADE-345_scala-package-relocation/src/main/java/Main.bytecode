@@ -1,0 +1,37 @@
+Compiled from "Main.java"
+public class Main {
+  public Main();
+    Code:
+       0: aload_0
+       1: invokespecial #12                 // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: getstatic     #22                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       3: new           #24                 // class java/lang/StringBuilder
+       6: dup
+       7: invokespecial #25                 // Method java/lang/StringBuilder."<init>":()V
+      10: ldc           #26                 // String Test
+      12: invokevirtual #30                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      15: invokestatic  #36                 // Method relocated/scala211/Logger.FQCN:()Ljava/lang/String;
+      18: invokevirtual #30                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      21: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      24: invokevirtual #45                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      27: new           #7                  // class Main$Test
+      30: dup
+      31: invokespecial #46                 // Method Main$Test."<init>":()V
+      34: astore_1
+      35: getstatic     #22                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      38: new           #24                 // class java/lang/StringBuilder
+      41: dup
+      42: invokespecial #25                 // Method java/lang/StringBuilder."<init>":()V
+      45: ldc           #48                 // String Logger:
+      47: invokevirtual #30                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      50: aload_1
+      51: invokevirtual #52                 // Method Main$Test.logger:()Lorg/apache/logging/log4j/spi/ExtendedLogger;
+      54: invokevirtual #55                 // Method java/lang/StringBuilder.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+      57: invokevirtual #39                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      60: invokevirtual #45                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      63: return
+}
