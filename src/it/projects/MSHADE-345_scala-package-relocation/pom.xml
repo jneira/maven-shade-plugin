@@ -32,33 +32,69 @@ under the License.
     Test handling scala package relocation.
   </description>
 
+  <properties>
+    <scala.binary.version>2.11</scala.binary.version>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>scala212</id>
+      <properties>
+        <scala.binary.version>2.12</scala.binary.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>scala213</id>
+      <properties>
+        <scala.binary.version>2.13</scala.binary.version>
+      </properties>
+    </profile>
+  </profiles>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api-scala_2.11</artifactId>
-      <version>12.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api-scala_2.12</artifactId>
-      <version>12.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api-scala_2.13</artifactId>
+      <artifactId>log4j-api-scala_${scala.binary.version}</artifactId>
       <version>12.0</version>
     </dependency>
   </dependencies>
 
   <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+            <archive>
+                <manifest>
+                    <mainClass>MyApp</mainClass>
+                </manifest>
+            </archive>
+        </configuration>
+    </plugin>
+    <plugin>
+      <groupId>net.alchim31.maven</groupId>
+      <artifactId>scala-maven-plugin</artifactId>
+      <executions>
+          <execution>
+              <id>scala-compile-first</id>
+              <phase>process-resources</phase>
+              <goals>
+                  <goal>compile</goal>
+              </goals>
+          </execution>
+      </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.4</version>
         <executions>
           <execution>
-            <id>attach-shade-211</id>
+            <id>attach-shade</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
@@ -67,60 +103,19 @@ under the License.
               <shadedArtifactAttached>false</shadedArtifactAttached>
               <artifactSet>
                 <includes>
-                  <include>org.apache.logging.log4j:log4j-api-scala_2.11</include>
+                  <include>org.apache.logging.log4j:log4j-api-scala_${scala.binary.version}</include>
                   <include>org.scala-lang:scala-library</include>
+                  <include>org.apache.logging.log4j:log4j-api</include>
                 </includes>
               </artifactSet>
               <relocations>
                 <relocation>
                   <pattern>org.apache.logging.log4j.scala</pattern>
-                  <shadedPattern>relocated.scala211</shadedPattern>
+                  <shadedPattern>relocated.scala</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>scala</pattern>
-                  <shadedPattern>relocated.scala211</shadedPattern>
-                </relocation>
-              </relocations>
-            </configuration>
-          </execution>
-          <execution>
-            <id>attach-shade-212</id>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <shadedArtifactAttached>false</shadedArtifactAttached>
-              <artifactSet>
-                <includes>
-                  <include>org.apache.logging.log4j:log4j-api-scala_2.12</include>
-                </includes>
-              </artifactSet>
-              <relocations>
-                <relocation>
-                  <pattern>org.apache.logging.log4j.scala</pattern>
-                  <shadedPattern>relocated.scala212</shadedPattern>
-                </relocation>
-              </relocations>
-            </configuration>
-          </execution>
-          <execution>
-            <id>attach-shade-213</id>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <shadedArtifactAttached>false</shadedArtifactAttached>
-              <artifactSet>
-                <includes>
-                  <include>org.apache.logging.log4j:log4j-api-scala_2.13</include>
-                </includes>
-              </artifactSet>
-              <relocations>
-                <relocation>
-                  <pattern>org.apache.logging.log4j.scala</pattern>
-                  <shadedPattern>relocated.scala213</shadedPattern>
+                  <shadedPattern>relocated.scala</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>
